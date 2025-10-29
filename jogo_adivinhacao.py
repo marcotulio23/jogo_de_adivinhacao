@@ -1,36 +1,35 @@
 import streamlit as st
 import random
 
-# Título e instruções
-st.title("🎯 JOGO DE ADIVINHAÇÃO")
-st.write("Seja bem-vindo(a) ao meu primeiro jogo em Python!")
-st.write("Objetivo: Tentar acertar o número que o programa selecionou aleatoriamente entre 1 e 50")
-st.write('---')
+st.set_page_config(page_title="Jogo de Adivinhação", layout="centered")
 
-# Inicializar número secreto e tentativas usando sessão do Streamlit
+st.title("🎯 Jogo de Adivinhação")
+st.write("Tente adivinhar o número que o computador escolheu entre 1 e 50!")
+
+# Inicializa variáveis no session_state
 if 'numero' not in st.session_state:
     st.session_state.numero = random.randint(1, 50)
     st.session_state.tentativas = 0
-    st.session_state.jogo_finalizado = False
+    st.session_state.jogo_ativo = True
 
-# Input do jogador
-palpite = st.number_input("Insira seu palpite:", min_value=1, max_value=50, step=1)
-
-# Botão para tentar adivinhar
-if st.button("Tentar") and not st.session_state.jogo_finalizado:
-    st.session_state.tentativas += 1
-
-    if palpite == st.session_state.numero:
-        st.success(f"🎉 Parabéns, você acertou o número após {st.session_state.tentativas} tentativas!")
-        st.session_state.jogo_finalizado = True
-    elif palpite < st.session_state.numero:
-        st.info("O número é maior!")
-    else:
-        st.info("O número é menor!")
-
-# Botão para reiniciar o jogo
-if st.button("Reiniciar Jogo"):
+# Função para reiniciar o jogo
+def reiniciar_jogo():
     st.session_state.numero = random.randint(1, 50)
     st.session_state.tentativas = 0
-    st.session_state.jogo_finalizado = False
-    st.experimental_rerun()
+    st.session_state.jogo_ativo = True
+
+# Entrada do palpite
+if st.session_state.jogo_ativo:
+    palpite = st.number_input("Digite seu palpite:", min_value=1, max_value=50, step=1)
+    if st.button("Chutar"):
+        st.session_state.tentativas += 1
+        if palpite < st.session_state.numero:
+            st.warning("O número é maior! 📈")
+        elif palpite > st.session_state.numero:
+            st.warning("O número é menor! 📉")
+        else:
+            st.success(f"🎉 Parabéns! Você acertou em {st.session_state.tentativas} tentativas!")
+            st.session_state.jogo_ativo = False
+
+# Botão para reiniciar a qualquer momento
+st.button("Reiniciar jogo", on_click=reiniciar_jogo)
