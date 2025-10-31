@@ -4,7 +4,7 @@ import random
 st.set_page_config(page_title="Jogo de Adivinhação", layout="centered")
 
 st.title("🎯 Jogo de Adivinhação")
-st.write("Tente adivinhar o número que o computador escolheu entre 1 e 50!")
+st.write("Tente adivinhar o número que a máquina escolheu entre 1 e 50!")
 
 # Inicializa variáveis no session_state
 if 'numero' not in st.session_state:
@@ -28,7 +28,7 @@ if st.session_state.jogo_ativo:
         elif palpite > st.session_state.numero:
             st.warning("O número é menor! 📉")
         else:
-            st.success(f"🎉 Parabéns! Você acertou em {st.session_state.tentativas} tentativas!")
+            st.success(f"🎉 Parabéns! Você acertouz após {st.session_state.tentativas} tentativas!")
             st.session_state.jogo_ativo = False
 
 # Botão para reiniciar a qualquer momento
