@@ -28,7 +28,7 @@ if st.session_state.jogo_ativo:
         elif palpite > st.session_state.numero:
             st.warning("O número é menor! 📉")
         else:
-            st.success(f"🎉 Parabéns! Você acertouz após {st.session_state.tentativas} tentativas!")
+            st.success(f"🎉 Parabéns! Você acertou após {st.session_state.tentativas} tentativas!")
             st.session_state.jogo_ativo = False
 
 # Botão para reiniciar a qualquer momento
